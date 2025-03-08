@@ -1,68 +1,42 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+
 public class Main {
-    public static void main(String[] args) {
-        Books CU = new Books("Captain Underpants", "Pilkey", true);
-        Books HP = new Books("Hairy Porter", "J.K Rolling", true);
-        Books SC = new Books("The Starving Caterpillar", "Elrac", true);
-        Books BL = new Books("Sodium Hypochlorite", "Cube", true);
-        ArrayList<Books> available = new ArrayList<>();
-        ArrayList<Books> taken = new ArrayList<>();
-        available.add(CU);
-        available.add(HP);
-        available.add(SC);
-        available.add(BL);
-        System.out.println("Hi! Welcome to the library");
+    public static void main(String args[]) {
+        System.out.println("Hi! Welcome to task manager. What task do you want to manage?");
         Scanner keyboard = new Scanner(System.in);
-        System.out.println("What would you like to check out today?");
-        for (Books b : available) {
-            System.out.println(b.title + " by " + b.author);
-        }
-        String borrow = keyboard.nextLine();
-        for(int i = 0; i < available.size(); i++) {
-            if (borrow.equalsIgnoreCase(available.get(i).getTitle())) {
-                available.get(i).setIsAvailable(false);
-                taken.add(available.get(i));
+        String task = keyboard.nextLine();
+        ArrayList<String> manager = new ArrayList<>();
+        manager.add(task);
+
+        while (!task.equals("n")) {
+            for (int i = 0; i < manager.size(); i++) {
+                System.out.println(manager.get(i) + " is at index " + i);
             }
-        }
-        while (!(borrow.equals("n"))) {
-            for (Books b : available) {
-                if(b.isAvailable) {
-                    System.out.println(b.title + " by " + b.author);
-                }
-            }
-            System.out.println("Would like to check out another book? y/n");
-            borrow = keyboard.nextLine();
-            if(borrow.equals("y")) {
-                System.out.println("What would you like to check out?");
-                for (Books b : available) {
-                    if (b.isAvailable) {
-                        System.out.println(b.title + " by " + b.author);
-                    }
-                }
-                borrow = keyboard.nextLine();
-                for (int i = 0; i < available.size(); i++) {
-                    if (borrow.equalsIgnoreCase(available.get(i).getTitle())) {
-                        available.get(i).setIsAvailable(false);
-                        taken.add(available.get(i));
+
+            System.out.println("Do you want to continue? (y/n)");
+            task = keyboard.nextLine();
+
+            if (task.equals("y")) {
+                System.out.println("Would you like to add or remove a task?");
+                String action = keyboard.nextLine();
+
+                if (action.equals("add")) {
+                    System.out.println("What task would you like to add?");
+                    task = keyboard.nextLine();
+                    manager.add(task);
+                } else if (action.equals("remove")) {
+                    System.out.println("What would you like to remove?");
+                    task = keyboard.nextLine();
+                    for (int i = 0; i < manager.size(); i++) {
+                        if (manager.get(i).equals(task)) {
+                            manager.remove(i);
+                            break;
+                        }
                     }
                 }
             }
         }
-        System.out.println("Thank you for your time!");
-        System.out.println("In Your Bag:");
-        for (Books b : taken) {
-            System.out.println(b.title + " by " + b.author);
-        }
-        System.out.println("Library:");
-        for (Books b : available) {
-            System.out.println(b.title + " by " + b.author);
-            if (b.isAvailable) {
-                System.out.println("Available for checkout");
-            } else {
-                System.out.println("Checked out");
-            }
-        }
+        System.out.println("Thank you for using the Task Manager app!");
     }
 }
-
